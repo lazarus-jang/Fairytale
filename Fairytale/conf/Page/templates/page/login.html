@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+<form action = {% url 'Page:loginuser' %} method = "POST">
+    <fieldset>
+        {% csrf_token %}
+        <label>아이디:<input type="text" name="user-name" size="12"></label>
+        <label>비밀번호:<input type="password" name="user-pw" size="12" ></label>
+        <input type="submit" value="로그인">
+        {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+        {% endfor %}
+    </div>
+{% endif %}
+    </fieldset>
+</form>
+
+<a href= "{% url 'social:begin' 'google-oauth2' %}"> Google로 로그인</a>
+<a href= "{% url 'social:begin' 'naver' %}"> Naver로 로그인</a>
+<a href="/join">회원가입 </a>
+{% endblock %}
